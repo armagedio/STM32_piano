@@ -61,8 +61,12 @@ void Error_Handler(void);
 #define blue_button_Pin GPIO_PIN_0
 #define blue_button_GPIO_Port GPIOA
 #define blue_button_EXTI_IRQn EXTI0_IRQn
+#define white_button_Pin GPIO_PIN_10
+#define white_button_GPIO_Port GPIOD
 #define buzzer_Pin GPIO_PIN_11
 #define buzzer_GPIO_Port GPIOD
+#define dioda_Pin GPIO_PIN_13
+#define dioda_GPIO_Port GPIOD
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
