@@ -69,8 +69,8 @@ void MX_USB_HOST_Process(void);
 /* USER CODE BEGIN PFP */
 void piano();
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
+//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+//{
 //	if(GPIO_Pin==white_button_Pin)
 //	{
 //
@@ -78,23 +78,20 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 //		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_14);
 //		piano();
 //	}
-}
+//}
 
 //void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 //{
 //	if(GPIO_Pin==blue_button_Pin)
 //	{
-//		htim10.Init.Prescaler = 99;
-//		htim10.Init.Period = 121;
-//		piano();
 //		void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-//		{
-//		if(htim->Instance == TIM10)
+//			{
+//			if(htim->Instance == TIM10)
 //			{
 //				HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_11);
 //			}
-//		piano();
-//		}
+//		//piano();
+//			}
 //	}
 //}
 
@@ -147,6 +144,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -180,17 +178,34 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	while (1)
-	{
+	while(1)
+{
 
-	if(HAL_GPIO_ReadPin(white_button_GPIO_Port,white_button_Pin)==RESET)
+	if (HAL_GPIO_ReadPin(GPIOD, white_external_button_Pin) == GPIO_PIN_SET)
 	{
-		HAL_GPIO_WritePin(GPIOD,dioda_Pin,SET);
-		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_14);
-		HAL_Delay(100);
-		HAL_GPIO_WritePin(GPIOD,dioda_Pin,RESET);
+		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_15);
 		HAL_Delay(100);
 	}
+	if (HAL_GPIO_ReadPin(GPIOB, yellow_external_button_Pin) == GPIO_PIN_SET)
+	{
+		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_14);
+		HAL_Delay(100);
+	}
+	if (HAL_GPIO_ReadPin(GPIOD, blue_external_button_Pin) == GPIO_PIN_SET)
+	{
+		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_13);
+		HAL_Delay(100);
+	}
+
+
+//		if(HAL_GPIO_ReadPin(GPIOD,GPIO_PIN_10) == GPIO_PIN_SET)
+//				{
+//					HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_SET);
+//				}
+//				else
+//				{
+//					//HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
+//				}
 
     /* USER CODE END WHILE */
     MX_USB_HOST_Process();
@@ -512,11 +527,17 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(blue_button_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : white_button_Pin */
-  GPIO_InitStruct.Pin = white_button_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
-  HAL_GPIO_Init(white_button_GPIO_Port, &GPIO_InitStruct);
+  /*Configure GPIO pin : yellow_external_button_Pin */
+  GPIO_InitStruct.Pin = yellow_external_button_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(yellow_external_button_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : blue_external_button_Pin white_external_button_Pin */
+  GPIO_InitStruct.Pin = blue_external_button_Pin|white_external_button_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
   /*Configure GPIO pins : buzzer_Pin PD12 dioda_Pin PD14
                            PD15 PD4 */
@@ -536,6 +557,12 @@ static void MX_GPIO_Init(void)
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 

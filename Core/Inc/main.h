@@ -61,8 +61,15 @@ void Error_Handler(void);
 #define blue_button_Pin GPIO_PIN_0
 #define blue_button_GPIO_Port GPIOA
 #define blue_button_EXTI_IRQn EXTI0_IRQn
-#define white_button_Pin GPIO_PIN_10
-#define white_button_GPIO_Port GPIOD
+#define yellow_external_button_Pin GPIO_PIN_14
+#define yellow_external_button_GPIO_Port GPIOB
+#define yellow_external_button_EXTI_IRQn EXTI15_10_IRQn
+#define blue_external_button_Pin GPIO_PIN_8
+#define blue_external_button_GPIO_Port GPIOD
+#define blue_external_button_EXTI_IRQn EXTI9_5_IRQn
+#define white_external_button_Pin GPIO_PIN_10
+#define white_external_button_GPIO_Port GPIOD
+#define white_external_button_EXTI_IRQn EXTI15_10_IRQn
 #define buzzer_Pin GPIO_PIN_11
 #define buzzer_GPIO_Port GPIOD
 #define dioda_Pin GPIO_PIN_13
