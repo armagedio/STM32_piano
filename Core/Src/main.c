@@ -69,66 +69,31 @@ void MX_USB_HOST_Process(void);
 /* USER CODE BEGIN PFP */
 void piano();
 
-//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-//{
-//	if(GPIO_Pin==white_button_Pin)
-//	{
-//
-//		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_13);
-//		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_14);
-//		piano();
-//	}
-//}
 
 //void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 //{
-//	if(GPIO_Pin==blue_button_Pin)
-//	{
-//		void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-//			{
-//			if(htim->Instance == TIM10)
-//			{
-//				HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_11);
-//			}
-//		//piano();
-//			}
-//	}
-//}
-
-//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+//if(GPIO_Pin==blue_button_Pin)
 //{
-//	if(htim->Instance == TIM10)// Interrupt timer TIM10
-//	{
-//		  htim10.Init.Prescaler = 75;
-//		  htim10.Init.CounterMode = TIM_COUNTERMODE_UP;
-//		  htim10.Init.Period = 900;
-//		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_11);
-//	}
-//}
-//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-//{
-//	if(htim->Instance == TIM10)// Interrupt timer TIM10
-//	{
-//		  htim10.Init.Prescaler = 10;
-//		  htim10.Init.CounterMode = TIM_COUNTERMODE_UP;
-//		  htim10.Init.Period = 100;
-//		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_11);
-//	}
-//}
-//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
-//{
-//	if(htim->Instance == TIM11)// Interrupt timer TIM11
-//	{
-//		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_11);
-//	}
-//}
-//void HAL_TIM_TriggerCallback(TIM_HandleTypeDef *htim)
-//{
-//	if(htim->Instance == TIM11)
-//	{
+//	HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_15);
+//	HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_11);
+//	HAL_Delay(100);
 //
-//	}
 //}
+//}
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim->Instance == TIM10)
+	{
+		if(HAL_GPIO_ReadPin(GPIOD, white_external_button_Pin) == GPIO_PIN_SET)
+		{
+		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_11);
+		}
+		if(HAL_GPIO_ReadPin(GPIOB, yellow_external_button_Pin) == GPIO_PIN_SET)
+		{
+		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_11);
+		}
+	}
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -183,8 +148,8 @@ int main(void)
 
 	if (HAL_GPIO_ReadPin(GPIOD, white_external_button_Pin) == GPIO_PIN_SET)
 	{
-		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_15);
-		HAL_Delay(100);
+//		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_15);
+//		HAL_Delay(100);
 	}
 	if (HAL_GPIO_ReadPin(GPIOB, yellow_external_button_Pin) == GPIO_PIN_SET)
 	{
@@ -422,10 +387,10 @@ static void MX_TIM10_Init(void)
 
   /* USER CODE END TIM10_Init 1 */
   htim10.Instance = TIM10;
-  htim10.Init.Prescaler = 9;
+  htim10.Init.Prescaler = 99;
   htim10.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim10.Init.Period = 799;
-  htim10.Init.ClockDivision = TIM_CLOCKDIVISION_DIV4;
+  htim10.Init.Period = 271;
+  htim10.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim10.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim10) != HAL_OK)
   {
